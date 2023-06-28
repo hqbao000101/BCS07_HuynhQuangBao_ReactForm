@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 export default class Table extends Component {
   fetchData = (id) => {
-    console.log("fetchData: ", id);
+    let item = this.props.listStudent.find((item) => item.id === id);
+    this.props.updateStateEdit(false, item);
   };
 
   deleteStudent = (id) => {

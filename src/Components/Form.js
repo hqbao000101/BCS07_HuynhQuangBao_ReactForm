@@ -103,7 +103,6 @@ export default class Form extends Component {
       isDisabled: true,
       arrStudent: newArrStudent,
     });
-    // document.getElementById("student-form").reset();
   };
 
   // todo: update Array State
@@ -111,16 +110,50 @@ export default class Form extends Component {
     this.setState({
       ...this.state,
       arrStudent: newArr,
-    })
-  }
+    });
+  };
+
+  // todo: update state when editing
+  updateStateEdit = (formState, newValue) => {
+    this.setState({
+      ...this.state,
+      values: { ...newValue },
+      formState: formState,
+    });
+  };
+
+  // todo: Update new Information
+  updateStudent = (event) => {
+    event.preventDefault();
+    let newInfo = this.state.values;
+    let index = this.state.arrStudent.findIndex(
+      (item) => item.id === newInfo.id
+    );
+    let newArr = this.state.arrStudent;
+    newArr[index] = newInfo;
+    this.setState({
+      ...this.state,
+      values: {
+        id: "",
+        fullName: "",
+        phone: "",
+        email: "",
+      },
+      formState: true,
+      isDisabled: true,
+      arrStudent: newArr,
+    });
+  };
 
   render() {
     const { id, fullName, phone, email } = this.state.errors;
     return (
       <>
-        <h1 className="text-white bg-black p-4 mb-0 py-5">Thông tin sinh viên</h1>
+        <h1 className="text-white bg-black p-4 mb-0 py-5">
+          Thông tin sinh viên
+        </h1>
 
-        <form id="student-form" className="container-fluid p-4">
+        <form className="container-fluid p-4">
           <div className="row">
             {/* Mã sv*/}
             <div className="mb-3 col-md-6">
@@ -134,6 +167,7 @@ export default class Form extends Component {
                 id="id"
                 onChange={this.getValues}
                 value={this.state.values.id}
+                disabled={!this.state.formState}
               />
               <p className="text-danger fst-italic mt-2 fw-semibold">{id}</p>
             </div>
@@ -207,13 +241,18 @@ export default class Form extends Component {
               type="submit"
               className="btn btn-warning text-white py-2 px-3"
               disabled={this.state.isDisabled}
+              onClick={this.updateStudent}
             >
               Cập nhật sinh viên
             </button>
           )}
         </form>
 
-        <Table listStudent={this.state.arrStudent} updateArrState={this.updateArrState}/>
+        <Table
+          listStudent={this.state.arrStudent}
+          updateArrState={this.updateArrState}
+          updateStateEdit={this.updateStateEdit}
+        />
       </>
     );
   }
