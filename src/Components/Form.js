@@ -103,7 +103,7 @@ export default class Form extends Component {
       isDisabled: true,
       arrStudent: newArrStudent,
     });
-    document.getElementById("student-form").reset();
+    // document.getElementById("student-form").reset();
   };
 
   // todo: update Array State
@@ -133,6 +133,7 @@ export default class Form extends Component {
                 name="id"
                 id="id"
                 onChange={this.getValues}
+                value={this.state.values.id}
               />
               <p className="text-danger fst-italic mt-2 fw-semibold">{id}</p>
             </div>
@@ -149,6 +150,7 @@ export default class Form extends Component {
                 id="fullName"
                 onChange={this.getValues}
                 data-type="name"
+                value={this.state.values.fullName}
               />
               <p className="text-danger fst-italic mt-2 fw-semibold">
                 {fullName}
@@ -167,6 +169,7 @@ export default class Form extends Component {
                 id="phone"
                 onChange={this.getValues}
                 data-type="phone"
+                value={this.state.values.phone}
               />
               <p className="text-danger fst-italic mt-2 fw-semibold">{phone}</p>
             </div>
@@ -183,6 +186,7 @@ export default class Form extends Component {
                 id="email"
                 onChange={this.getValues}
                 data-type="email"
+                value={this.state.values.email}
               />
               <p className="text-danger fst-italic mt-2 fw-semibold">{email}</p>
             </div>
