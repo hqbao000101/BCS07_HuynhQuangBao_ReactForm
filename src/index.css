@@ -60,3 +60,8 @@ button#search:hover {
 button#search:hover i {
   color: white;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
