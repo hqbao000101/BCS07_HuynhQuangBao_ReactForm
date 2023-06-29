@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 export default class Table extends Component {
+  state = {
+    studentArr: this.props.listStudent,
+  };
+
   fetchData = (id) => {
     let item = this.props.listStudent.find((item) => item.id === id);
     this.props.updateStateEdit(false, item);
@@ -13,6 +17,26 @@ export default class Table extends Component {
     this.props.updateArrState(newArr);
   };
 
+  filterData = (event) => {
+    const { value } = event.target;
+    const filterArr = this.props.listStudent.filter(
+      (item) =>
+        item.id.includes(value) ||
+        item.fullName.includes(value) ||
+        item.phone.includes(value) ||
+        item.email.includes(value)
+    );
+    if (value) {
+      this.setState({
+        studentArr: [...filterArr],
+      });
+    } else {
+      this.setState({
+        studentArr: [...this.props.listStudent],
+      });
+    }
+  };
+
   render() {
     return (
       <>
@@ -22,6 +46,7 @@ export default class Table extends Component {
             type="text"
             placeholder="Enter search key..."
             className="py-2 px-3 me-2"
+            onChange={this.filterData}
           />
           <button id="search">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -39,7 +64,7 @@ export default class Table extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.listStudent.map((item, index) => {
+              {this.state.studentArr.map((item, index) => {
                 const { id, fullName, phone, email } = item;
                 return (
                   <tr className="text-center" key={index}>

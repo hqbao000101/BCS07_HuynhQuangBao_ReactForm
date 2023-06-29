@@ -1,7 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import Table from "./Table";
 
 export default class Form extends Component {
+  constructor() {
+    super();
+    this.ref = createRef();
+  }
+
   state = {
     values: {
       id: "",
@@ -103,13 +108,19 @@ export default class Form extends Component {
       isDisabled: true,
       arrStudent: newArrStudent,
     });
+    this.ref.current.setState({
+      studentArr: [...this.state.arrStudent],
+    });
   };
 
   // todo: update Array State
   updateArrState = (newArr) => {
     this.setState({
       ...this.state,
-      arrStudent: newArr,
+      arrStudent: [...newArr],
+    });
+    this.ref.current.setState({
+      studentArr: [...this.state.arrStudent],
     });
   };
 
@@ -117,7 +128,7 @@ export default class Form extends Component {
   updateStateEdit = (formState, newValue) => {
     this.setState({
       ...this.state,
-      values: { ...newValue },
+      values: { ...newValue }, // ! Here is the place that connect the values address with the array address
       formState: formState,
     });
   };
@@ -142,6 +153,9 @@ export default class Form extends Component {
       formState: true,
       isDisabled: true,
       arrStudent: newArr,
+    });
+    this.ref.current.setState({
+      studentArr: [...this.state.arrStudent],
     });
   };
 
@@ -252,6 +266,7 @@ export default class Form extends Component {
           listStudent={this.state.arrStudent}
           updateArrState={this.updateArrState}
           updateStateEdit={this.updateStateEdit}
+          ref={this.ref}
         />
       </>
     );
